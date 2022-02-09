@@ -2,18 +2,25 @@
   "name": "@elbowspaceuk/laravel-settings-vue",
   "version": "0.0.1",
   "description": "A Vue integration for the Laravel Settings package",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ElbowSpaceUK/laravel-settings-vue.git"
+    "url": "git+https://github.com/ElbowSpaceUK/laravel-settings-vue.git"
   },
   "author": "Toby Twigger <tobytwigger1@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ElbowSpaceUK/laravel-settings-vue/issues"
   },
-  "homepage": "https://github.com/ElbowSpaceUK/laravel-settings-vue#readme"
+  "homepage": "https://github.com/ElbowSpaceUK/laravel-settings-vue#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
 }
