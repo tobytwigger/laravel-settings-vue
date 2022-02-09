@@ -1,0 +1,19 @@
+{
+  "name": "@elbowspaceuk/laravel-settings-vue",
+  "version": "0.0.1",
+  "description": "A Vue integration for the Laravel Settings package",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ElbowSpaceUK/laravel-settings-vue.git"
+  },
+  "author": "Toby Twigger <tobytwigger1@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElbowSpaceUK/laravel-settings-vue/issues"
+  },
+  "homepage": "https://github.com/ElbowSpaceUK/laravel-settings-vue#readme"
+}
