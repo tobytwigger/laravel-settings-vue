@@ -1,12 +1,20 @@
 // import mixin from './mixin';
 
+import {allSettings} from "./core/windowAccessor";
+
 type VueOptions = import('./types/vue').VueOptions;
 
 import createSettings, { SettingType } from './core/settings';
 
 export const installer = {
     install(VueInstance: any, options: VueOptions) {
-        VueInstance.prototype.$settings = createSettings(axios: options.axios, options?.type ?? SettingType.Singleton);
+        let settings = createSettings(options.axios, options?.type ?? SettingType.Singleton);
+
+        settings.repository.addSettings(
+            allSettings()
+        );
+
+        VueInstance.prototype.$settings = settings;
 
         // Load the global mixin
         // VueInstance.mixin(mixin);

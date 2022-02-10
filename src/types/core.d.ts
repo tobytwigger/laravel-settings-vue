@@ -1,5 +1,5 @@
 interface Settings {
-    test: string;
+
 }
 
 interface Repository {

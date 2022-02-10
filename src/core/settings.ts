@@ -14,12 +14,15 @@
 
 import {Repository} from "../types/core";
 import Singleton from "./repository/singleton";
+import {Axios, AxiosResponse} from "axios";
 
 export class Settings {
     readonly repository: Repository;
+    readonly axios: Axios;
 
-    constructor(repository: Repository) {
+    constructor(repository: Repository, axios: Axios) {
         this.repository = repository;
+        this.axios = axios;
     }
 
     setValue(key: string, value: any): void {
@@ -39,10 +42,20 @@ export class Settings {
      */
 
     loadSetting(key: string): Settings {
-        return this;
+        return this.loadSettings([key]);
     }
 
     loadSettings(keys: Array<String>): Settings {
+        this.axios.get('/api/settings/setting', {
+            params: {
+                settings: keys,
+                t: new Date().getTime() // New URL each time to avoid caching
+            }
+        })
+            .then((response: AxiosResponse<ESSettings>) => {
+                this.repository.addSettings(response.data)
+            });
+
         return this;
     }
 }
@@ -53,17 +66,17 @@ export enum SettingType {
     Vuex = 'vuex',
 }
 
-const createSettings = (type: SettingType = SettingType.Singleton) => {
+const createSettings = (axios: Axios, type: SettingType = SettingType.Singleton) => {
     if (type === SettingType.Singleton) {
-        return new Settings(Singleton.getInstance());
+        return new Settings(Singleton.getInstance(), axios);
     }
     if (type === SettingType.LocalStorage) {
-        return new Settings(Singleton.getInstance());
+        return new Settings(Singleton.getInstance(), axios);
     }
     if (type === SettingType.Vuex) {
-        return new Settings(Singleton.getInstance());
+        return new Settings(Singleton.getInstance(), axios);
     }
-    return new Settings(Singleton.getInstance());
+    return new Settings(Singleton.getInstance(), axios);
 };
 
 export default createSettings;

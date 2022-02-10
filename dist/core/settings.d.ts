@@ -1,7 +1,9 @@
 import { Repository } from "../types/core";
+import { Axios } from "axios";
 export declare class Settings {
     readonly repository: Repository;
-    constructor(repository: Repository);
+    readonly axios: Axios;
+    constructor(repository: Repository, axios: Axios);
     setValue(key: string, value: any): void;
     getValue(key: string): any;
     loadSetting(key: string): Settings;
@@ -12,5 +14,5 @@ export declare enum SettingType {
     LocalStorage = "local",
     Vuex = "vuex"
 }
-declare const createSettings: (type?: SettingType) => Settings;
+declare const createSettings: (axios: Axios, type?: SettingType) => Settings;
 export default createSettings;
