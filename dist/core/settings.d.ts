@@ -4,7 +4,9 @@ export declare class Settings {
     readonly repository: Repository;
     readonly axios: Axios;
     constructor(repository: Repository, axios: Axios);
-    setValue(key: string, value: any): void;
+    private static updateLocalSettingProperty;
+    setValue(key: string, value: any): Settings;
+    setValues(values: ESSettings): Settings;
     getValue(key: string): any;
     loadSetting(key: string): Settings;
     loadSettings(keys: Array<String>): Settings;

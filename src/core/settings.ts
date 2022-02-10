@@ -12,9 +12,11 @@
 //     // Use the axios instance and return the promise
 // }
 
+import Vue from 'vue';
+
 import {Repository} from "../types/core";
 import Singleton from "./repository/singleton";
-import {Axios, AxiosResponse} from "axios";
+import {Axios, AxiosError, AxiosResponse} from "axios";
 
 export class Settings {
     readonly repository: Repository;
@@ -23,10 +25,36 @@ export class Settings {
     constructor(repository: Repository, axios: Axios) {
         this.repository = repository;
         this.axios = axios;
+        this.repository.onSettingUpdated((key: string, value: any) => Settings.updateLocalSettingProperty(key, value, this))
     }
 
-    setValue(key: string, value: any): void {
+    private static updateLocalSettingProperty(key: string, value: any, target: Settings): void {
+        // Vue.set(target.settingVM.$data.settings, key, value);
+        // console.log(target.settings);
+        // let newSetting: ESSettings = {};
+        // newSetting[key] = value;
+        // target.settings = Object.assign(target.settings, newSetting);
+        // Vue.set(Vue.prototype.$setting, key, value);
+        // console.log(key, value);
+    }
 
+    setValue(key: string, value: any): Settings {
+        let settings: ESSettings = {};
+        settings[key] = value;
+        return this.setValues(settings);
+    }
+
+    setValues(values: ESSettings): Settings {
+        let currentValues = this.repository.only(Object.keys(values));
+        this.repository.addSettings(values);
+
+        this.axios.post('/api/settings/setting', {settings: values})
+            .then((response: AxiosResponse<ESSettings>) => {
+                this.repository.addSettings(response.data)
+            })
+            .catch((error: AxiosError) => this.repository.addSettings(currentValues));
+
+        return this;
     }
 
     getValue(key: string): any {

@@ -3,5 +3,6 @@ interface ESSettings {
 }
 
 interface Window {
-    ESSettings?: ESSettings
+    ESSettings?: ESSettings,
+    $setting: ESSettings
 }

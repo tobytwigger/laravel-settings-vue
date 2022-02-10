@@ -8,6 +8,8 @@ interface Repository {
     reset(): Repository;
     getSetting(key: string): any;
     hasSetting(key: string): boolean;
+    only(keys: Array<string>): ESSettings;
+    onSettingUpdated(callback: (key: string, value: any) => void): void;
 }
 
 /*
