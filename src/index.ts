@@ -10,27 +10,27 @@ export const installer = {
     install(VueInstance: any, options: VueOptions) {
 
 
-        // const setting = Vue.observable({
-        //     // Observability only works on the properties of objects, so we have a value property which should be reactive
-        //     value: {
-        //         unit_system: 'xyz'
-        //     }
-        // });
-        // Object.defineProperty(VueInstance.prototype, '$setting', {
-        //     get() {
-        //         console.log('IN THE GETTER');
-        //         return setting.value
-        //     },
-        //     set (value) {
-        //         console.log('IN THE SETTER')
-        //         setting.value = value
-        //     }
-        // });
+        const setting = Vue.observable({
+            // Observability only works on the properties of objects, so we have a value property which should be reactive
+            value: {
+                // This will be a key value object of all settings
+            }
+        });
+        Object.defineProperty(VueInstance.prototype, '$setting', {
+            get() {
+                console.log('IN THE GETTER');
+                return setting.value
+            },
+            set (value) {
+                console.log('IN THE SETTER')
+                setting.value = value
+            }
+        });
         let settings = createSettings(options.axios, options?.type ?? SettingType.Singleton);
         settings.repository.onSettingUpdated((key, value) => {
             let newSettings: ESSettings = VueInstance.prototype.$setting ?? {};
             newSettings[key] = value;
-            VueInstance.prototype.$setting = newSettings;
+            setting.value = newSettings;
         });
         settings.repository.addSettings(
             allSettings()
