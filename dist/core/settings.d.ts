@@ -1,10 +1,9 @@
 import { Repository } from "../types/core";
-import { Axios } from "axios";
+import { Axios } from 'axios';
 export declare class Settings {
     readonly repository: Repository;
     readonly axios: Axios;
     constructor(repository: Repository, axios: Axios);
-    private static updateLocalSettingProperty;
     setValue(key: string, value: any): Settings;
     setValues(values: ESSettings): Settings;
     getValue(key: string): any;

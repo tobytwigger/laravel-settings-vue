@@ -4,13 +4,9 @@ exports.SettingType = exports.Settings = void 0;
 var singleton_1 = require("./repository/singleton");
 var Settings = (function () {
     function Settings(repository, axios) {
-        var _this = this;
         this.repository = repository;
         this.axios = axios;
-        this.repository.onSettingUpdated(function (key, value) { return Settings.updateLocalSettingProperty(key, value, _this); });
     }
-    Settings.updateLocalSettingProperty = function (key, value, target) {
-    };
     Settings.prototype.setValue = function (key, value) {
         var settings = {};
         settings[key] = value;

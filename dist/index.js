@@ -1,21 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.installer = void 0;
+var windowAccessor_1 = require("./core/windowAccessor");
 var vue_1 = require("vue");
+var settings_1 = require("./core/settings");
 exports.installer = {
     install: function (VueInstance, options) {
-        console.log(VueInstance);
-        var testtwo = vue_1.default.observable({
-            value: 'initial'
+        var _a;
+        var setting = vue_1.default.observable({
+            value: {}
         });
-        Object.defineProperty(VueInstance.prototype, '$testtwo', {
+        Object.defineProperty(VueInstance.prototype, '$setting', {
             get: function () {
-                console.log('IN THE TEST 2 GETTER');
-                return testtwo.value;
+                return setting.value;
             },
             set: function (value) {
-                console.log('IN THE TEST 2 SETTER');
-                testtwo.value = value;
+                setting.value = value;
+            }
+        });
+        var settings = (0, settings_1.default)(options.axios, (_a = options === null || options === void 0 ? void 0 : options.type) !== null && _a !== void 0 ? _a : settings_1.SettingType.Singleton);
+        settings.repository.onSettingUpdated(function (key, value) {
+            var _a;
+            var newSettings = (_a = setting.value) !== null && _a !== void 0 ? _a : {};
+            newSettings[key] = value;
+            setting.value = newSettings;
+        });
+        settings.repository.addSettings((0, windowAccessor_1.allSettings)());
+        Object.defineProperty(VueInstance.prototype, '$settings', {
+            get: function () {
+                return settings;
             }
         });
     },
