@@ -6,6 +6,7 @@ import {Axios} from "axios";
 declare module 'vue/types/vue' {
     interface Vue {
         $settings: Settings;
+        $testtwo: string
     }
 }
 
