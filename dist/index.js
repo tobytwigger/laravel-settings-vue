@@ -23,6 +23,7 @@ exports.installer = {
             var _a;
             var newSettings = (_a = setting.value) !== null && _a !== void 0 ? _a : {};
             newSettings[key] = value;
+            console.log(newSettings);
             setting.value = newSettings;
         });
         settings.repository.addSettings((0, windowAccessor_1.allSettings)());

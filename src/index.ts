@@ -25,6 +25,7 @@ export const installer = {
         settings.repository.onSettingUpdated((key, value) => {
             let newSettings: ESSettings = setting.value ?? {};
             newSettings[key] = value;
+            console.log(newSettings);
             setting.value = newSettings;
         });
 
