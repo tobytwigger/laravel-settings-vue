@@ -22,7 +22,7 @@ exports.installer = {
         });
         var settings = (0, settings_1.default)(options.axios, (_a = options === null || options === void 0 ? void 0 : options.type) !== null && _a !== void 0 ? _a : settings_1.SettingType.Singleton);
         settings.repository.onSettingUpdated(function (key, value) {
-            vue_1.default.set(setting.value, key, value);
+            vue_1.default.set(VueInstance.prototype.$setting, key, value);
         });
         settings.repository.addSettings((0, windowAccessor_1.allSettings)());
         Object.defineProperty(VueInstance.prototype, '$settings', {
