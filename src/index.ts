@@ -10,7 +10,9 @@ export const installer = {
     install(VueInstance: any, options: VueOptions) {
         const setting = Vue.observable({
             // Observability only works on the properties of objects, so we have a value property which should be reactive
-            value: {}
+            value: {
+                unit_system: '123'
+            }
         });
         Object.defineProperty(VueInstance.prototype, '$setting', {
             get() {

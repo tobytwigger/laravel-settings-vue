@@ -8,7 +8,9 @@ exports.installer = {
     install: function (VueInstance, options) {
         var _a;
         var setting = vue_1.default.observable({
-            value: {}
+            value: {
+                unit_system: '123'
+            }
         });
         Object.defineProperty(VueInstance.prototype, '$setting', {
             get: function () {
