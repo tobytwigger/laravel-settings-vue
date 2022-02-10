@@ -11,7 +11,7 @@ export const installer = {
         const setting = Vue.observable({
             // Observability only works on the properties of objects, so we have a value property which should be reactive
             value: {
-                unit_system: '123'
+                // unit_system: '123'
             }
         });
         Object.defineProperty(VueInstance.prototype, '$setting', {
@@ -25,7 +25,6 @@ export const installer = {
 
         let settings = createSettings(options.axios, options?.type ?? SettingType.Singleton);
         settings.repository.onSettingUpdated((key, value) => {
-            console.log('Setting ' + key + ' to ' + value);
             Vue.set(VueInstance.prototype.$setting, key, value);
         });
 
