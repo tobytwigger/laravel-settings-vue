@@ -1,5 +1,3 @@
-// import mixin from './mixin';
-
 import {allSettings} from "./core/windowAccessor";
 
 type VueOptions = import('./types/vue').VueOptions;
