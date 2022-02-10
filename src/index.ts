@@ -23,10 +23,11 @@ export const installer = {
 
         let settings = createSettings(options.axios, options?.type ?? SettingType.Singleton);
         settings.repository.onSettingUpdated((key, value) => {
-            let newSettings: ESSettings = setting.value ?? {};
-            newSettings[key] = value;
-            console.log(newSettings);
-            setting.value = newSettings;
+            Vue.set(setting.value, key, value);
+            // let newSettings: ESSettings = setting.value ?? {};
+            // newSettings[key] = value;
+            // console.log(newSettings);
+            // setting.value = newSettings;
         });
 
         settings.repository.addSettings(
