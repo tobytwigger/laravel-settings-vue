@@ -3,7 +3,7 @@ on:
     release:
         types: [published]
 jobs:
-    build:
+    npm:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -18,3 +18,19 @@ jobs:
             - run: npm publish --access=public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    githubpackages:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            # Setup .npmrc file to publish to npm
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://npm.pkg.github.com'
+            - run: npm install
+            - run: npm run build
+            - run: npm version --no-git-tag-version --no-commit-hooks --allow-same-version ${{ github.event.release.tag_name }}
+            - run: npm publish --access=public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
