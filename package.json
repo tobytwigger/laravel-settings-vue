@@ -1,6 +1,6 @@
 {
     "name": "@elbowspaceuk/laravel-settings-vue",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A Vue integration for the Laravel Settings package",
     "main": "dist/index.js",
     "scripts": {
