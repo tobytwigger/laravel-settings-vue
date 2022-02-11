@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ElbowSpaceUK/laravel-settings-vue.git"
+        "url": "https://github.com/ElbowSpaceUK/laravel-settings-vue.git"
     },
     "author": "Toby Twigger <tobytwigger1@gmail.com>",
     "license": "ISC",
