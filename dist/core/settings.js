@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SettingType = exports.Settings = void 0;
 var singleton_1 = require("./repository/singleton");
+var esConfig_1 = require("./esConfig");
 var Settings = (function () {
     function Settings(repository, axios) {
         this.repository = repository;
@@ -14,13 +15,16 @@ var Settings = (function () {
     };
     Settings.prototype.setValues = function (values) {
         var _this = this;
+        var _a;
         var currentValues = this.repository.only(Object.keys(values));
         this.repository.addSettings(values);
-        this.axios.post('/api/settings/setting', { settings: values })
-            .then(function (response) {
-            _this.repository.addSettings(response.data);
-        })
-            .catch(function (error) { return _this.repository.addSettings(currentValues); });
+        if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
+            this.axios.post((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), { settings: values })
+                .then(function (response) {
+                _this.repository.addSettings(response.data);
+            })
+                .catch(function (error) { return _this.repository.addSettings(currentValues); });
+        }
         return this;
     };
     Settings.prototype.getValue = function (key) {
@@ -35,15 +39,18 @@ var Settings = (function () {
     };
     Settings.prototype.loadSettings = function (keys) {
         var _this = this;
-        this.axios.get('/api/settings/setting', {
-            params: {
-                settings: keys,
-                t: new Date().getTime()
-            }
-        })
-            .then(function (response) {
-            _this.repository.addSettings(response.data);
-        });
+        var _a;
+        if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
+            this.axios.get((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), {
+                params: {
+                    settings: keys,
+                    t: new Date().getTime()
+                }
+            })
+                .then(function (response) {
+                _this.repository.addSettings(response.data);
+            });
+        }
         return this;
     };
     return Settings;
