@@ -1,4 +1,4 @@
-import { Repository } from "../../types/core";
+import { Repository } from '../../types/core';
 declare class Singleton implements Repository {
     settings: ESSettings;
     onUpdate: {

@@ -7,25 +7,31 @@ var settings_1 = require("./core/settings");
 exports.installer = {
     install: function (VueInstance, options) {
         var _a;
-        var setting = vue_1.default.observable({
-            value: {}
-        });
+        var settingStore = {};
+        var settingValue = {
+            value: new Proxy(settingStore, {
+                set: function (fullSettings, key, value, receiver) {
+                    if (typeof key === 'string') {
+                        if (!settingCopy.hasOwnProperty(key) || settingCopy[key] !== value) {
+                            settingCopy[key] = value;
+                            settings.setValue(key, value);
+                        }
+                        fullSettings[key] = value;
+                        return true;
+                    }
+                    return true;
+                }
+            })
+        };
+        var setting = vue_1.default.observable(settingValue);
         var settingCopy = {};
         Object.defineProperty(VueInstance.prototype, '$setting', {
             get: function () {
                 return setting.value;
             },
             set: function (updatedSettings) {
-                var _this = this;
-                console.log(updatedSettings);
-                Object.keys(updatedSettings)
-                    .filter(function (key) { return _this.setting.value.hasOwnProperty(key) && _this.setting.value[key] === updatedSettings[key]; })
-                    .forEach(function (key) {
-                    console.log(key);
-                    settingCopy[key] = updatedSettings[key];
-                });
                 setting.value = updatedSettings;
-            }
+            },
         });
         var settings = (0, settings_1.default)(options.axios, (_a = options === null || options === void 0 ? void 0 : options.type) !== null && _a !== void 0 ? _a : settings_1.SettingType.Singleton);
         settings.repository.onSettingUpdated(function (key, value) {
@@ -36,7 +42,7 @@ exports.installer = {
         Object.defineProperty(VueInstance.prototype, '$settings', {
             get: function () {
                 return settings;
-            }
+            },
         });
     },
 };

@@ -1,4 +1,4 @@
-import { Repository } from "../types/core";
+import { Repository } from '../types/core';
 import { Axios } from 'axios';
 export declare class Settings {
     readonly repository: Repository;

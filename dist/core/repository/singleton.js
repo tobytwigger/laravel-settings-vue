@@ -48,9 +48,7 @@ var Singleton = (function () {
     Singleton.prototype.only = function (keys) {
         var _this = this;
         var settings = {};
-        keys
-            .filter(function (key) { return _this.hasSetting(key); })
-            .forEach(function (key) { return settings[key] = _this.getSetting(key); });
+        keys.filter(function (key) { return _this.hasSetting(key); }).forEach(function (key) { return (settings[key] = _this.getSetting(key)); });
         return settings;
     };
     Singleton.getInstance = function () {

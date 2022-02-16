@@ -19,7 +19,8 @@ var Settings = (function () {
         var currentValues = this.repository.only(Object.keys(values));
         this.repository.addSettings(values);
         if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
-            this.axios.post((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), { settings: values })
+            this.axios
+                .post((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), { settings: values })
                 .then(function (response) {
                 _this.repository.addSettings(response.data);
             })
@@ -45,11 +46,12 @@ var Settings = (function () {
         var _this = this;
         var _a;
         if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
-            this.axios.get((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), {
+            this.axios
+                .get((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), {
                 params: {
                     settings: keys,
-                    t: new Date().getTime()
-                }
+                    t: new Date().getTime(),
+                },
             })
                 .then(function (response) {
                 _this.repository.addSettings(response.data);
