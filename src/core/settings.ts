@@ -14,10 +14,10 @@
 
 import Vue from 'vue';
 
-import {Repository} from "../types/core";
-import Singleton from "./repository/singleton";
-import {Axios, AxiosError, AxiosResponse} from 'axios';
-import {getConfig} from "./esConfig";
+import { Repository } from '../types/core';
+import Singleton from './repository/singleton';
+import { Axios, AxiosError, AxiosResponse } from 'axios';
+import { getConfig } from './esConfig';
 
 export class Settings {
     readonly repository: Repository;
@@ -37,13 +37,17 @@ export class Settings {
     setValues(values: ESSettings): Settings {
         let currentValues = this.repository.only(Object.keys(values));
         this.repository.addSettings(values);
-
         if (getConfig('api_enabled') ?? true) {
-            this.axios.post(getConfig('api_get_url' ?? '/api/settings/setting'), {settings: values})
+            this.axios
+                .post(getConfig('api_get_url' ?? '/api/settings/setting'), { settings: values })
                 .then((response: AxiosResponse<ESSettings>) => {
-                    this.repository.addSettings(response.data)
+                    this.repository.addSettings(response.data);
                 })
-                .catch((error: AxiosError) => this.repository.addSettings(currentValues));
+                .catch((error: AxiosError) => {
+                    console.log(error);
+                    this.repository.addSettings(currentValues);
+                })
+                .then(() => 'Finished');
         }
 
         return this;
@@ -67,18 +71,17 @@ export class Settings {
 
     loadSettings(keys: Array<String>): Settings {
         if (getConfig('api_enabled') ?? true) {
-            this.axios.get(getConfig('api_get_url' ?? '/api/settings/setting'), {
-                params: {
-                    settings: keys,
-                    t: new Date().getTime() // New URL each time to avoid caching
-                }
-            })
+            this.axios
+                .get(getConfig('api_get_url' ?? '/api/settings/setting'), {
+                    params: {
+                        settings: keys,
+                        t: new Date().getTime(), // New URL each time to avoid caching
+                    },
+                })
                 .then((response: AxiosResponse<ESSettings>) => {
-                    this.repository.addSettings(response.data)
+                    this.repository.addSettings(response.data);
                 });
         }
-
-
 
         return this;
     }

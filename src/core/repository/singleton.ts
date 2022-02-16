@@ -1,9 +1,8 @@
-import {Repository} from "../../types/core";
-
+import { Repository } from '../../types/core';
 
 class Singleton implements Repository {
     settings: ESSettings;
-    onUpdate: {  (key: string, value: any): void; }[] = []
+    onUpdate: { (key: string, value: any): void }[] = [];
 
     private static instance: Singleton;
 
@@ -30,14 +29,14 @@ class Singleton implements Repository {
     private triggerSettingUpdate(key: string, value: any): void {
         this.onUpdate.forEach((callback: (key: string, value: any) => void) => {
             callback(key, value);
-        })
+        });
     }
 
     addSettings(settings: ESSettings): Singleton {
         Object.keys(settings).forEach((key: string) => {
             this.triggerSettingUpdate(key, settings[key]);
-        })
-        this.settings = {...this.settings, ...settings};
+        });
+        this.settings = { ...this.settings, ...settings };
         return this;
     }
 
@@ -48,9 +47,9 @@ class Singleton implements Repository {
 
     only(keys: Array<string>): ESSettings {
         let settings: ESSettings = {};
-        keys
-            .filter((key: string) => this.hasSetting(key))
-            .forEach((key: string) => settings[key] = this.getSetting(key))
+        keys.filter((key: string) => this.hasSetting(key)).forEach(
+            (key: string) => (settings[key] = this.getSetting(key)),
+        );
 
         return settings;
     }

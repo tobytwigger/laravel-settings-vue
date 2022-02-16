@@ -23,7 +23,11 @@ var Settings = (function () {
                 .then(function (response) {
                 _this.repository.addSettings(response.data);
             })
-                .catch(function (error) { return _this.repository.addSettings(currentValues); });
+                .catch(function (error) {
+                console.log(error);
+                _this.repository.addSettings(currentValues);
+            })
+                .then(function () { return 'Finished'; });
         }
         return this;
     };

@@ -1,13 +1,13 @@
 interface ESSettings {
-    [key: string]: any,
+    [key: string]: any;
 }
 
 interface ESSettingsConfig {
-    [key: string]: any,
+    [key: string]: any;
 }
 
 interface Window {
-    ESSettings?: ESSettings,
-    ESSettingsConfig?: ESSettingsConfig,
-    $setting: ESSettings
+    ESSettings?: ESSettings;
+    ESSettingsConfig?: ESSettingsConfig;
+    $setting: ESSettings;
 }

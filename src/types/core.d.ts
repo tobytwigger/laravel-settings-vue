@@ -1,6 +1,4 @@
-interface Settings {
-
-}
+interface Settings {}
 
 interface Repository {
     getSettings(): ESSettings;
