@@ -43,7 +43,7 @@ var Settings = (function () {
         var _a;
         keys = keys.filter(function (key) { return !_this.isSettingLoading(key); });
         this.markSettingAsLoading(keys);
-        if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
+        if (((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) && keys.length > 0) {
             this.axios
                 .get((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), {
                 params: {

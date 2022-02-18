@@ -21,7 +21,13 @@ exports.installer = {
                     return true;
                 },
                 get: function (fullSettings, key, receiver) {
-                    if (typeof key === 'string' && !fullSettings.hasOwnProperty(key)) {
+                    var allowedValues = [
+                        '_isVue'
+                    ];
+                    if (typeof key === 'string'
+                        && !allowedValues.includes(key)
+                        && !fullSettings.hasOwnProperty(key)
+                        && typeof settings !== 'undefined') {
                         settings.loadSetting(key);
                         return undefined;
                     }

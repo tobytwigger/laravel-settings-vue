@@ -50,7 +50,7 @@ export class Settings {
     loadSettings(keys: Array<string>): Settings {
         keys = keys.filter((key) => !this.isSettingLoading(key));
         this.markSettingAsLoading(keys);
-        if (getConfig('api_enabled') ?? true) {
+        if ((getConfig('api_enabled') ?? true) && keys.length > 0) {
             this.axios
                 .get(getConfig('api_get_url' ?? '/api/settings/setting'), {
                     params: {
