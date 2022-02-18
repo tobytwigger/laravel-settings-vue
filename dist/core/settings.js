@@ -5,6 +5,7 @@ var singleton_1 = require("./repository/singleton");
 var esConfig_1 = require("./esConfig");
 var Settings = (function () {
     function Settings(repository, axios) {
+        this.loadingSettings = [];
         this.repository = repository;
         this.axios = axios;
     }
@@ -21,13 +22,8 @@ var Settings = (function () {
         if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
             this.axios
                 .post((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), { settings: values })
-                .then(function (response) {
-                _this.repository.addSettings(response.data);
-            })
-                .catch(function (error) {
-                console.log(error);
-                _this.repository.addSettings(currentValues);
-            })
+                .then(function (response) { return _this.repository.addSettings(response.data); })
+                .catch(function (error) { return _this.repository.addSettings(currentValues); })
                 .then(function () { return 'Finished'; });
         }
         return this;
@@ -45,6 +41,8 @@ var Settings = (function () {
     Settings.prototype.loadSettings = function (keys) {
         var _this = this;
         var _a;
+        keys = keys.filter(function (key) { return !_this.isSettingLoading(key); });
+        this.markSettingAsLoading(keys);
         if ((_a = (0, esConfig_1.getConfig)('api_enabled')) !== null && _a !== void 0 ? _a : true) {
             this.axios
                 .get((0, esConfig_1.getConfig)('api_get_url' !== null && 'api_get_url' !== void 0 ? 'api_get_url' : '/api/settings/setting'), {
@@ -55,9 +53,19 @@ var Settings = (function () {
             })
                 .then(function (response) {
                 _this.repository.addSettings(response.data);
-            });
+            })
+                .finally(function () { return _this.markSettingAsLoaded(keys); });
         }
         return this;
+    };
+    Settings.prototype.markSettingAsLoading = function (settings) {
+        this.loadingSettings = this.loadingSettings.concat(settings);
+    };
+    Settings.prototype.markSettingAsLoaded = function (settings) {
+        this.loadingSettings = this.loadingSettings.filter(function (key) { return !settings.includes(key); });
+    };
+    Settings.prototype.isSettingLoading = function (key) {
+        return this.loadingSettings.includes(key);
     };
     return Settings;
 }());

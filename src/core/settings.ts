@@ -8,6 +8,7 @@ import { getConfig } from './esConfig';
 export class Settings {
     readonly repository: Repository;
     readonly axios: Axios;
+    private loadingSettings: Array<string> = [];
 
     constructor(repository: Repository, axios: Axios) {
         this.repository = repository;
@@ -26,13 +27,8 @@ export class Settings {
         if (getConfig('api_enabled') ?? true) {
             this.axios
                 .post(getConfig('api_get_url' ?? '/api/settings/setting'), { settings: values })
-                .then((response: AxiosResponse<ESSettings>) => {
-                    this.repository.addSettings(response.data);
-                })
-                .catch((error: AxiosError) => {
-                    console.log(error);
-                    this.repository.addSettings(currentValues);
-                })
+                .then((response: AxiosResponse<ESSettings>) => this.repository.addSettings(response.data))
+                .catch((error: AxiosError) => this.repository.addSettings(currentValues))
                 .then(() => 'Finished');
         }
 
@@ -47,15 +43,13 @@ export class Settings {
         return undefined;
     }
 
-    /*
-    Dynamic getter. I can say this.$settings.siteName and it'll be null, then suddenly something. Or just something
-     */
-
     loadSetting(key: string): Settings {
         return this.loadSettings([key]);
     }
 
-    loadSettings(keys: Array<String>): Settings {
+    loadSettings(keys: Array<string>): Settings {
+        keys = keys.filter((key) => !this.isSettingLoading(key));
+        this.markSettingAsLoading(keys);
         if (getConfig('api_enabled') ?? true) {
             this.axios
                 .get(getConfig('api_get_url' ?? '/api/settings/setting'), {
@@ -66,10 +60,23 @@ export class Settings {
                 })
                 .then((response: AxiosResponse<ESSettings>) => {
                     this.repository.addSettings(response.data);
-                });
+                })
+                .finally(() => this.markSettingAsLoaded(keys));
         }
 
         return this;
+    }
+
+    markSettingAsLoading(settings: Array<string>) {
+        this.loadingSettings = this.loadingSettings.concat(settings);
+    }
+
+    markSettingAsLoaded(settings: Array<string>) {
+        this.loadingSettings = this.loadingSettings.filter((key: string): boolean => !settings.includes(key));
+    }
+
+    isSettingLoading(key: string): boolean {
+        return this.loadingSettings.includes(key);
     }
 }
 

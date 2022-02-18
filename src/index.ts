@@ -10,7 +10,7 @@ export const installer = {
         let settingStore = {};
         let settingValue = {
             value: new Proxy(settingStore, {
-                set(fullSettings: ESSettings, key, value, receiver) {
+                set(fullSettings: ESSettings, key: string|symbol, value: any, receiver) {
                     if(typeof key === 'string') {
                         if(!settingCopy.hasOwnProperty(key) || settingCopy[key] !== value) {
                             settingCopy[key] = value;
@@ -19,6 +19,13 @@ export const installer = {
                         fullSettings[key] = value;
                     }
                     return true;
+                },
+                get: function(fullSettings: { [key: string|symbol]: any }, key: string|symbol, receiver) {
+                    if(typeof key === 'string' && !fullSettings.hasOwnProperty(key)) {
+                        settings.loadSetting(key);
+                        return undefined;
+                    }
+                    return fullSettings[key];
                 }
             })
         }

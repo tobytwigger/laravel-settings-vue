@@ -17,9 +17,15 @@ exports.installer = {
                             settings.setValue(key, value);
                         }
                         fullSettings[key] = value;
-                        return true;
                     }
                     return true;
+                },
+                get: function (fullSettings, key, receiver) {
+                    if (typeof key === 'string' && !fullSettings.hasOwnProperty(key)) {
+                        settings.loadSetting(key);
+                        return undefined;
+                    }
+                    return fullSettings[key];
                 }
             })
         };
