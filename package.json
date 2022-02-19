@@ -3,6 +3,20 @@
     "version": "0.0.1",
     "description": "A Vue integration for the Laravel Settings package",
     "main": "dist/index.js",
+    "keywords": [
+        "config",
+        "open-source",
+        "php",
+        "settings",
+        "vuejs",
+        "laravel",
+        "database",
+        "vue",
+        "persistence",
+        "configuration",
+        "settings-storage",
+        "settings-repository"
+    ],
     "scripts": {
         "test": "jest --config jestconfig.json",
         "build": "tsc",

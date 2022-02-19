@@ -1,4 +1,4 @@
-# Laravel Settings (Vue)
+# Laravel Settings (Vue 2)
 > Powerful and feature rich settings for Laravel and Vue.
 
 [![Latest Version](https://img.shields.io/github/v/release/ElbowSpaceUK/laravel-settings?label=Latest%20Version&sort=semver&style=plastic)](https://github.com/ElbowSpaceUK/laravel-settings/releases)
