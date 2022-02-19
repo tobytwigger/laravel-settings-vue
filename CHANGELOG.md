@@ -7,5 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1]
+
 ### Changed
-- Eager loading is automatic when accessing a property
+- Eager loading is automatic when accessing a property. You no longer need a `$settings.loadSetting()` in your Vue component.
