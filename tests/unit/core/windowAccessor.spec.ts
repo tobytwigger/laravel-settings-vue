@@ -37,7 +37,3 @@ it('returns the value of the setting', () => {
     expect(Accessor.getSetting('fontsize')).toBe(undefined);
 });
 
-
-it('returns undefined if the setting is not given', () => {
-
-});

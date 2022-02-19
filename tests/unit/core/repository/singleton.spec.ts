@@ -47,3 +47,33 @@ it('can check if a setting exists', () => {
     expect(singleton.hasSetting('siteTheme')).toBe(true);
     expect(singleton.hasSetting('timeout')).toBe(false);
 });
+
+it('can return a subset of the settings', () => {
+    let settings = {
+        siteName: 'My site name',
+        siteTheme: 'Nova',
+        darkMode: false
+    };
+    singleton.addSettings(settings);
+    expect(singleton.only(['siteName', 'darkMode'])).toEqual({
+        siteName: 'My site name',
+        darkMode: false
+    })
+});
+
+it('calls any callbacks that are registered', () => {
+    let settings = {
+        siteName: 'My site name',
+        siteTheme: 'Nova',
+        darkMode: false
+    };
+    let calledSettings: Array<String> = [];
+    singleton.onSettingUpdated(((key, value) => calledSettings[key] = value));
+
+    singleton.addSettings(settings);
+    expect(calledSettings).toEqual([
+        'siteName',
+        'siteTheme',
+        'darkMode'
+    ]);
+})
