@@ -1,7 +1,7 @@
 # Laravel Settings (Vue 2)
 > Powerful and feature rich settings for Laravel and Vue.
 
-[![Latest Version](https://img.shields.io/github/v/release/ElbowSpaceUK/laravel-settings-vue?label=Latest%20Version&sort=semver&style=plastic)](https://github.com/ElbowSpaceUK/laravel-settings-vue/releases)
+[![Latest Version](https://img.shields.io/github/v/release/tobytwigger/laravel-settings-vue?label=Latest%20Version&sort=semver&style=plastic)](https://github.com/tobytwigger/laravel-settings-vue/releases)
 
 ## Contents
 
@@ -18,7 +18,7 @@ Laravel Settings lets you persist strongly typed settings within your app, with 
 - Global settings and user-set settings.
 - Native integration with Vue JS.
 
-This is the Vue integration. You will also need to install the [Laravel Settings package](https://github.com/ElbowSpaceUK/laravel-settings).
+This is the Vue integration. You will also need to install the [Laravel Settings package](https://github.com/tobytwigger/laravel-settings).
 
 ## Example
 
@@ -47,7 +47,7 @@ export default {
 
 We've taken care over documenting everything you'll need to get started and use Laravel settings fully.
 
-[Check out the docs](https://elbowspaceuk.github.io/laravel-settings/vue) on our documentation site.
+[Check out the docs](https://tobytwigger.github.io/laravel-settings/vue) on our documentation site.
 
 ## Contributing
 
