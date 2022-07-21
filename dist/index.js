@@ -22,7 +22,7 @@ exports.installer = {
                 },
                 get: function (fullSettings, key, receiver) {
                     var allowedValues = [
-                        '_isVue'
+                        '_isVue', '__v_skip', '__v_isRef', '__v_isReadonly', '__ob__'
                     ];
                     if (typeof key === 'string'
                         && !allowedValues.includes(key)

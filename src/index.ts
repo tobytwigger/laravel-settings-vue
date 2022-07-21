@@ -22,7 +22,7 @@ export const installer = {
                 },
                 get: function(fullSettings: { [key: string|symbol]: any }, key: string|symbol, receiver) {
                     let allowedValues = [
-                        '_isVue'
+                        '_isVue', '__v_skip', '__v_isRef', '__v_isReadonly', '__ob__'
                     ]
                     if(typeof key === 'string'
                         && !allowedValues.includes(key)
